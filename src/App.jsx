@@ -13,7 +13,7 @@ function App(){
     const secondModalToggle = () => {
         if(firstModal == "show")
         {
-            firstModal("hide");
+            setFirstModal("hide");
 
         }
        if(val == true)

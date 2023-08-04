@@ -12,10 +12,6 @@ function Modal({header, closeButton, text, children, state, bg, bgHeader})
     const handleSubmit = (event) => {
         event.preventDefault();
     };
-
-    function handleSubmit2(){
-        
-    };
     
     return(
         <form className={str} onSubmit={handleSubmit} style={{backgroundColor: bg}}>
@@ -30,8 +26,9 @@ function Modal({header, closeButton, text, children, state, bg, bgHeader})
                 <div className='buttons'>
                   {children}  
                 </div>
-                
+
             </div>
+           
         </form>
     )
 }
