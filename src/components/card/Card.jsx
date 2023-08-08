@@ -8,18 +8,11 @@ function Card({fill,id, name, price, url, click, clickIz}){
     
     const [f, setF] = useState("none")
     const [f2, setF2] = useState("show")
-    const [arr, setArr] = useState([])
 
     function FillSvg(){
         setF('yellow');
-
         clickIz();
-        setArr(
-            prev => {
-                return[...prev, id]
-            }
-        )
-        console.log(arr)
+
         setTrash(id)
         arr2.push(id) 
 
