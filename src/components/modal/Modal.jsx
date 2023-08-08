@@ -1,5 +1,6 @@
 import { useState  } from 'react'
 import './Modal.scss'
+import PropTypes from 'prop-types'
 
 function Modal({header, closeButton, text, children, state, bg, bgHeader})
 {
@@ -18,7 +19,7 @@ function Modal({header, closeButton, text, children, state, bg, bgHeader})
             <div className="header" style={{backgroundColor: bgHeader}}>
                 {header}
                 {
-                    closeButton == "true" ? null : children[2]
+                    closeButton === "true" ? null : children[2]
                 }
             </div>
             <div className="body">
@@ -32,5 +33,16 @@ function Modal({header, closeButton, text, children, state, bg, bgHeader})
         </form>
     )
 }
+
+Modal.propTypes = {
+    text: PropTypes.string,
+    header: PropTypes.string,
+    closeButton: PropTypes.string,
+    state: PropTypes.string,
+    bg: PropTypes.string,
+    bgHeader: PropTypes.string
+}
+
+
 
 export default Modal

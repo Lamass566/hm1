@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Button.scss'
+import PropTypes from 'prop-types'
 
 function Button({text, bg, onClick}){
     return(
@@ -8,5 +9,12 @@ function Button({text, bg, onClick}){
         </>
     )
 }
+
+Button.propTypes = {
+    text: PropTypes.string,
+    bg: PropTypes.string,
+    onClick: PropTypes.func,
+}
+
 
 export default Button
