@@ -86,6 +86,7 @@ function App(){
      console.log(index)
      console.log(localStorage.getItem("arr"))
      let gg = localStorage.getItem("arr");
+
     return(
         <>
         <Header trash={trash} favourite={favourite2}/>
