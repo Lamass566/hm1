@@ -1,3 +1,5 @@
+
+
 import { useEffect, useState } from 'react'
 import Card from './components/card/Card';
 import './components/card/Card.scss'
@@ -8,9 +10,18 @@ import Button from "./components/button/Button"
 
 
 function App(){
+
+    if((localStorage.getItem("data")===null)&&(localStorage.getItem("arr")===null))
+    {
+        localStorage.setItem("data", 0)
+        localStorage.setItem("arr", 0)     
+    }
+
     //localStorage data
     let trashVal = localStorage.getItem("trash")
     let favouriteVal = localStorage.getItem("favourite")
+    Number(trashVal++);
+    Number(favouriteVal++);
 
     //useState variables
     const [data, setData] = useState([])
@@ -35,12 +46,9 @@ function App(){
           setData(data.products);
          })
 
-         setTrash(parse.length)
+         setTrash(parse.length-1)
          setFavourite2(parseFavourite.length-1)
       })
-
-    
-
 
     function secondModalToggle(){
         if(firstModal === "show")
@@ -112,9 +120,11 @@ function App(){
             <button style={{backgroundColor: "darkred"}} onClick={hideAllModals}>Cancel</button>
             <span className="closeX" onClick={hideAllModals}>X</span>
         </Modal>
+
         <div className={index}>
             {data.map(u => <Card fill={fill} id={u.id} clock={updateData} clickIz={addToFavourite}  name={u.name} price={u.price} url={u.url} click={secondModalToggle} key={u.id} /> )}
         </div>
+
         <div className={screen} onClick={hideAllModals}></div>
         </>
     )
