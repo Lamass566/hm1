@@ -10,17 +10,32 @@ function Card({fill,id, name, price, url, click, clickIz}){
     const [f2, setF2] = useState("show")
 
     function FillSvg(){
-        setF('yellow');
-        clickIz();
+        if(f === 'none')
+        {
+            setF('yellow');
+            clickIz();
 
-        setTrash(id)
-        arr2.push(id) 
+            setTrash(id)
+            arr2.push(id) 
 
-        let tempLS = localStorage.getItem("arr").split(',')
-        let parse = tempLS.map(string => parseInt(string));
+            let tempLS = localStorage.getItem("arr").split(',')
+            let parse = tempLS.map(string => parseInt(string));
 
-        let SumArr = [...parse, id]
-        localStorage.setItem("arr", SumArr)
+            let SumArr = [...parse, id]
+            localStorage.setItem("arr", SumArr)
+        }
+        else{
+            setF('none');
+            let currentId = id;
+            let tempLS = localStorage.getItem("arr").split(',')
+            let parse = tempLS.map(string => parseInt(string));
+
+            let d = parse.filter((n) => {return n != currentId});
+            console.log(d)
+
+            let SumArr = [...d]
+            localStorage.setItem("arr", SumArr)
+        }
     }
 
     useEffect(()=>{
