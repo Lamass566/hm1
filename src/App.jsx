@@ -8,13 +8,21 @@ import Button from "./components/button/Button"
 
 
 function App(){
+    //localStorage data
     let trashVal = localStorage.getItem("trash")
     let favouriteVal = localStorage.getItem("favourite")
 
+    //useState variables
     const [data, setData] = useState([])
     const [trash, setTrash] = useState(trashVal)
     const [favourite2, setFavourite2] = useState(favouriteVal)
+    const [screen, setScreen] = useState("")
+    const [secondModal, setSecondModal] = useState("hide")
+    const [firstModal, setFirstModal] = useState("hide")
+    const [val, setVal] = useState(true)
+    const [index, setIndex] = useState("flex-card-0")
 
+    //parse data from localStorage
     let tempLS = localStorage.getItem("data").split(',')
     let parse = tempLS.map(string => parseInt(string));
 
@@ -31,11 +39,7 @@ function App(){
          setFavourite2(parseFavourite.length-1)
       })
 
-    const [screen, setScreen] = useState("")
-    const [secondModal, setSecondModal] = useState("hide")
-    const [firstModal, setFirstModal] = useState("hide")
-    const [val, setVal] = useState(true)
-    const [index, setIndex] = useState("flex-card-0")
+    
 
 
     function secondModalToggle(){
@@ -72,6 +76,7 @@ function App(){
      }
      
      
+     //add product to cart
      function addToTrash()
      {
         hideAllModals()       
@@ -83,11 +88,13 @@ function App(){
         }
      }
      
+     //get id from Card component
      const [v, setV] = useState(0)
      const updateData = (value) => {
         setV(value);
      }
      
+     ////add product to favourite
      const [favourite, setFavourite] = useState('show')
      function addToFavourite(){
         setFavourite('hide')

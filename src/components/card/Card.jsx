@@ -5,7 +5,6 @@ const arr2 = [];
 function Card({fill,id, name, price, url, click,clock, clickIz}){
     
     const [trash, setTrash] = useState(id)
-    
     const [f, setF] = useState("none")
     const [f2, setF2] = useState("show")
 
