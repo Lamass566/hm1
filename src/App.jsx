@@ -101,7 +101,7 @@ function App(){
         hideAllModals()
      }
 
-     let gg = localStorage.getItem("arr");
+     let fill = localStorage.getItem("arr");
 
     return(
         <>
@@ -113,7 +113,7 @@ function App(){
             <span className="closeX" onClick={hideAllModals}>X</span>
         </Modal>
         <div className={index}>
-            {data.map(u => <Card fill={gg} id={u.id} clock={updateData} clickIz={addToFavourite}  name={u.name} price={u.price} url={u.url} click={secondModalToggle} key={u.id} /> )}
+            {data.map(u => <Card fill={fill} id={u.id} clock={updateData} clickIz={addToFavourite}  name={u.name} price={u.price} url={u.url} click={secondModalToggle} key={u.id} /> )}
         </div>
         <div className={screen} onClick={hideAllModals}></div>
         </>
