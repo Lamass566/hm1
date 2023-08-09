@@ -78,6 +78,4 @@ Card.propTypes = {
     click: PropTypes.func,
 }
 
-
-
 export default Card;
