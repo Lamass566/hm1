@@ -10,20 +10,26 @@ import Button from "./components/button/Button"
 function App(){
     let trashVal = localStorage.getItem("trash")
     let favouriteVal = localStorage.getItem("favourite")
-    Number(trashVal++);
-    Number(favouriteVal++);
 
     const [data, setData] = useState([])
     const [trash, setTrash] = useState(trashVal)
     const [favourite2, setFavourite2] = useState(favouriteVal)
 
+    let tempLS = localStorage.getItem("data").split(',')
+    let parse = tempLS.map(string => parseInt(string));
+
+    let tempLSFavourite = localStorage.getItem("arr").split(',')
+    let parseFavourite = tempLSFavourite.map(string => parseInt(string));
 
     useEffect(()=>{
         
         fetch('api/data.json').then((res)=>res.json()).then((data)=>{
           setData(data.products);
          })
-      },[])
+
+         setTrash(parse.length)
+         setFavourite2(parseFavourite.length-1)
+      })
 
     const [screen, setScreen] = useState("")
     const [secondModal, setSecondModal] = useState("hide")
@@ -32,7 +38,7 @@ function App(){
     const [index, setIndex] = useState("flex-card-0")
 
 
-    const secondModalToggle = () => {
+    function secondModalToggle(){
         if(firstModal === "show")
         {
             setFirstModal("hide");
@@ -42,7 +48,6 @@ function App(){
         }
         else if(val === true)
         {
-            
             setSecondModal("hide")
             setScreen("");
             setIndex("flex-card-0")
@@ -56,6 +61,7 @@ function App(){
             setIndex("flex-card-2")
             setVal(true)
         }
+        
     }
 
     const hideAllModals = () => {
@@ -63,28 +69,31 @@ function App(){
         setSecondModal("hide");
         setScreen("");
         setIndex("flex-card-0")
-        
      }
      
-     const addToTrash = () =>{
-        hideAllModals()
-        setTrash(Number(trash) + 1)
-        localStorage.setItem("trash", trash)
-        console.log(trash,"local")
+     
+     function addToTrash()
+     {
+        hideAllModals()       
+        
+        if(!parse.includes(v))
+        {
+            let SumArr = [...parse, v]
+            localStorage.setItem("data", SumArr)
+        }
+     }
+     
+     const [v, setV] = useState(0)
+     const updateData = (value) => {
+        setV(value);
      }
      
      const [favourite, setFavourite] = useState('show')
-     const addToFavourite = (event) =>{
-        console.log(event)
+     function addToFavourite(){
         setFavourite('hide')
         hideAllModals()
-        setFavourite2(Number(favourite2) + 1)
-        localStorage.setItem("favourite", favourite2)
-
      }
 
-     console.log(index)
-     console.log(localStorage.getItem("arr"))
      let gg = localStorage.getItem("arr");
 
     return(
@@ -97,7 +106,7 @@ function App(){
             <span className="closeX" onClick={hideAllModals}>X</span>
         </Modal>
         <div className={index}>
-            {data.map(u => <Card fill={gg} id={u.id} clickIz={addToFavourite} name={u.name} price={u.price} url={u.url} click={secondModalToggle} key={u.id} /> )}
+            {data.map(u => <Card fill={gg} id={u.id} clock={updateData} clickIz={addToFavourite}  name={u.name} price={u.price} url={u.url} click={secondModalToggle} key={u.id} /> )}
         </div>
         <div className={screen} onClick={hideAllModals}></div>
         </>

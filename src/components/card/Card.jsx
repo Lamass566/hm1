@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react'
 import './Card.scss'
 import PropTypes from 'prop-types'
 const arr2 = [];
-function Card({fill,id, name, price, url, click, clickIz}){
+function Card({fill,id, name, price, url, click,clock, clickIz}){
     
     const [trash, setTrash] = useState(id)
     
     const [f, setF] = useState("none")
     const [f2, setF2] = useState("show")
+
+    let tempLS = localStorage.getItem("arr").split(',')
+    let parse = tempLS.map(string => parseInt(string));
 
     function FillSvg(){
         if(f === 'none')
@@ -18,21 +21,13 @@ function Card({fill,id, name, price, url, click, clickIz}){
             setTrash(id)
             arr2.push(id) 
 
-            let tempLS = localStorage.getItem("arr").split(',')
-            let parse = tempLS.map(string => parseInt(string));
-
             let SumArr = [...parse, id]
             localStorage.setItem("arr", SumArr)
         }
         else{
             setF('none');
-            let currentId = id;
-            let tempLS = localStorage.getItem("arr").split(',')
-            let parse = tempLS.map(string => parseInt(string));
 
-            let d = parse.filter((n) => {return n != currentId});
-            console.log(d)
-
+            let d = parse.filter((n) => {return n != id});
             let SumArr = [...d]
             localStorage.setItem("arr", SumArr)
         }
@@ -47,20 +42,20 @@ function Card({fill,id, name, price, url, click, clickIz}){
         }
         else{
             setF('none');
-            // setF2('show')
+            // setF2('hide')
         }
       },[])
-      
-        
-
-
+    
     return(
         <div className={f2}>
         <div className="product-wrap">
             <div className="product-item">
             <img src={url}/>
                 <div className="product-buttons">
-                    <a href="#" onClick={click} className="button">В корзину</a>
+                    <a href="#" onClick={()=>{
+                        click()
+                        clock(id);
+                    }} className="button">В корзину</a>
                 </div>
             </div>
          <div className="product-title">

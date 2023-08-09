@@ -4,11 +4,7 @@ import PropTypes from 'prop-types'
 
 function Modal({header, closeButton, text, children, state, bg, bgHeader})
 {
-    const [bga, setBga] = useState(`form `+state)
-
-    console.log(bga)
     let str =   `form `+state;
-    console.log(str)
 
     const handleSubmit = (event) => {
         event.preventDefault();
