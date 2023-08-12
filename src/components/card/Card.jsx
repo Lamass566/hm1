@@ -2,68 +2,112 @@ import { useState, useEffect } from 'react'
 import './Card.scss'
 import PropTypes from 'prop-types'
 const arr2 = [];
-function Card({fill,id, name, price, url, click,clock, clickIz}){
+function Card({removeComponent,obj, data, route, fill, click, clock, clickIz}){
     
-    const [trash, setTrash] = useState(id)
-    const [f, setF] = useState("none")
-    const [f2, setF2] = useState("show")
+    // eslint-disable-next-line no-unused-vars
+    const [cart, setCart] = useState(obj.id)
+    const [svgFill, setSvgFill] = useState("none")
+    const [deleteBtn, setDeleteBtn] = useState("hide")
+    // eslint-disable-next-line no-unused-vars
+    const [showCard, setShowCard] = useState("show")
+    const [svgToggleClass, setSvgToggleClass] = useState('svgStar show')
 
     let tempLS = localStorage.getItem("arr").split(',')
     let parse = tempLS.map(string => parseInt(string));
+    let removeToggle = "product-buttons";
+    if(removeComponent){
+        removeToggle = "product-buttons hide"
+    }
 
     function FillSvg(){
-        if(f === 'none')
+        
+        if(svgFill === 'none')
         {
-            setF('yellow');
+            setSvgFill('yellow');
             clickIz();
 
-            setTrash(id)
-            arr2.push(id) 
+            setCart(obj.id)
+            arr2.push(obj.id) 
 
-            let SumArr = [...parse, id]
+            let SumArr = [...parse, obj.id]
             localStorage.setItem("arr", SumArr)
         }
         else{
-            setF('none');
+            setSvgFill('none');
 
-            let d = parse.filter((n) => {return n != id});
+            let d = parse.filter((n) => {return n !== obj.id});
             let SumArr = [...d]
             localStorage.setItem("arr", SumArr)
         }
+
     }
 
     useEffect(()=>{
-        
-        if(fill.includes(String(id)))
-        {
-            setF('yellow');
-            // setF2('show')
+
+        let showCardValue = 'hide';
+        let removeBtnValue = 'hide';
+        let colorValue = 'none';
+        let svgValue = 'svgStar show';
+
+        if (route === 'home') {
+            if (fill.includes(String(obj.id))) {
+                colorValue = 'yellow';
+                showCardValue = 'show';
+            }
+            else {
+                showCardValue = 'show';
+            }
         }
-        else{
-            setF('none');
-            // setF2('hide')
+
+        if (route === 'cart') {
+            if (data.includes(String(obj.id))) {
+                showCardValue = 'show';
+                removeBtnValue = 'show';
+                svgValue = 'svgStar hide'
+            }
         }
-      },[])
+
+        if (route === 'favourite') {
+            if (fill.includes(String(obj.id))) {
+                colorValue = 'yellow';
+                showCardValue = 'show';
+            }
+        }
+
+        setSvgFill(colorValue);
+        setShowCard(showCardValue);
+        setDeleteBtn(removeBtnValue);
+        setSvgToggleClass(svgValue)
+
+      },[fill, obj.id, route,data])
+
+      const buttonAction = () => {
+        click();
+        clock(obj.id, route);
+      };
     
     return(
-        <div className={f2}>
+
+        <div className={showCard}>
         <div className="product-wrap">
             <div className="product-item">
-            <img src={url}/>
-                <div className="product-buttons">
-                    <a href="#" onClick={()=>{
-                        click()
-                        clock(id);
-                    }} className="button">В корзину</a>
+            <img alt='img' src={obj.url}/>
+                <div className={removeToggle}>
+                    
+                    <a href="/#" onClick={buttonAction} className="button">В корзину</a>
                 </div>
             </div>
          <div className="product-title">
-             <p>{name}</p>
-             
-        <svg onClick={FillSvg} className='svgStar' width="25px" height="25px" viewBox="0 0 24 24" fill={f} xmlns="http://www.w3.org/2000/svg">
+             <p>{obj.name}</p>
+
+        <div className="product-flex-info">
+        <svg onClick={FillSvg} className={svgToggleClass} width="25px" height="25px" viewBox="0 0 24 24" fill={svgFill} xmlns="http://www.w3.org/2000/svg">
         <path d="M11.2691 4.41115C11.5006 3.89177 11.6164 3.63208 11.7776 3.55211C11.9176 3.48263 12.082 3.48263 12.222 3.55211C12.3832 3.63208 12.499 3.89177 12.7305 4.41115L14.5745 8.54808C14.643 8.70162 14.6772 8.77839 14.7302 8.83718C14.777 8.8892 14.8343 8.93081 14.8982 8.95929C14.9705 8.99149 15.0541 9.00031 15.2213 9.01795L19.7256 9.49336C20.2911 9.55304 20.5738 9.58288 20.6997 9.71147C20.809 9.82316 20.8598 9.97956 20.837 10.1342C20.8108 10.3122 20.5996 10.5025 20.1772 10.8832L16.8125 13.9154C16.6877 14.0279 16.6252 14.0842 16.5857 14.1527C16.5507 14.2134 16.5288 14.2807 16.5215 14.3503C16.5132 14.429 16.5306 14.5112 16.5655 14.6757L17.5053 19.1064C17.6233 19.6627 17.6823 19.9408 17.5989 20.1002C17.5264 20.2388 17.3934 20.3354 17.2393 20.3615C17.0619 20.3915 16.8156 20.2495 16.323 19.9654L12.3995 17.7024C12.2539 17.6184 12.1811 17.5765 12.1037 17.56C12.0352 17.5455 11.9644 17.5455 11.8959 17.56C11.8185 17.5765 11.7457 17.6184 11.6001 17.7024L7.67662 19.9654C7.18404 20.2495 6.93775 20.3915 6.76034 20.3615C6.60623 20.3354 6.47319 20.2388 6.40075 20.1002C6.31736 19.9408 6.37635 19.6627 6.49434 19.1064L7.4341 14.6757C7.46898 14.5112 7.48642 14.429 7.47814 14.3503C7.47081 14.2807 7.44894 14.2134 7.41394 14.1527C7.37439 14.0842 7.31195 14.0279 7.18708 13.9154L3.82246 10.8832C3.40005 10.5025 3.18884 10.3122 3.16258 10.1342C3.13978 9.97956 3.19059 9.82316 3.29993 9.71147C3.42581 9.58288 3.70856 9.55304 4.27406 9.49336L8.77835 9.01795C8.94553 9.00031 9.02911 8.99149 9.10139 8.95929C9.16534 8.93081 9.2226 8.8892 9.26946 8.83718C9.32241 8.77839 9.35663 8.70162 9.42508 8.54808L11.2691 4.41115Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-            <span className="product-price">$ {price}</span>
+        
+        <span className="product-price">$ {obj.price}</span>
+        <button className={deleteBtn} onClick={buttonAction}>X</button>
+        </div>  
         </div>
         </div>
         </div>

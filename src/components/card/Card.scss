@@ -116,6 +116,22 @@
    display: block;
 }
 
-.svgStar{
-   padding-top: 10px;
+
+
+.product-flex-info{
+   display: flex;
+   justify-content: center;
+   gap: 10px;
+   margin-right: 10px;
+}
+
+.product-flex-info>button{
+    padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: rgb(213, 28, 28);
+  color: black;
+  width: 20px;
+  border-radius: 5px;
 }

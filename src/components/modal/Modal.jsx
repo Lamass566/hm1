@@ -1,4 +1,4 @@
-import { useState  } from 'react'
+
 import './Modal.scss'
 import PropTypes from 'prop-types'
 
@@ -15,7 +15,7 @@ function Modal({header, closeButton, text, children, state, bg, bgHeader})
             <div className="header" style={{backgroundColor: bgHeader}}>
                 {header}
                 {
-                    closeButton === "true" ? null : children[2]
+                    closeButton === "true" ? null : children[3]
                 }
             </div>
             <div className="body">
