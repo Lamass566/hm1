@@ -1,4 +1,4 @@
-import { Router } from 'react-router-dom';
+
 import './Header.scss'
 import Star from '../svg/svgStar/Star';
 import Basket from '../svg/svgBasket/Basket';
