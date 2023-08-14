@@ -7,6 +7,10 @@ import Modal from "./components/modal/Modal"
 // eslint-disable-next-line no-unused-vars
 import Button from "./components/button/Button"
 import { Route, Routes } from 'react-router';
+import Layout from './pages/Layout';
+import Home from './pages/layout/Home';
+import Cart from './pages/layout/Cart';
+import Favourite from './pages/layout/Favourite';
 
 
 function App(){
@@ -155,9 +159,28 @@ function App(){
         
         <div className={index}>
         <Routes>
-            <Route path="/" element={data.map(u => <Card removeComponent={false} data={cartData} route="home" fill={fill} obj={cartdataObj={id:u.id, name:u.name, price:u.price,url:u.url}} clock={updateData} clickIz={addToFavourite} click={secondModalToggle} key={u.id} /> )}/>
-            <Route path="/cart" element={data.map(u => <Card removeComponent={true} data={cartData} route="cart" fill={fill} obj={cartdataObj={id:u.id, name:u.name, price:u.price,url:u.url}} clock={updateData} clickIz={addToFavourite} click={secondModalToggle} key={u.id} /> )}/>
-            <Route path="/favourite" element={data.map(u => <Card removeComponent={true} data={cartData} route="favourite" fill={fill} obj={cartdataObj={id:u.id, name:u.name, price:u.price,url:u.url}} clock={updateData} clickIz={addToFavourite} click={secondModalToggle} key={u.id} /> )}/>
+
+            <Route path="/" element={
+                <Layout>
+                    <Home>
+                    {data.map(u => <Card removeComponent={false} data={cartData} route="home" fill={fill} obj={cartdataObj={id:u.id, name:u.name, price:u.price,url:u.url}} clock={updateData} clickIz={addToFavourite} click={secondModalToggle} key={u.id} /> )}
+                    </Home>
+                </Layout>
+            }/>
+            <Route path="/cart" element={
+                <Layout>
+                    <Cart>
+                    {data.map(u => <Card removeComponent={true} data={cartData} route="cart" fill={fill} obj={cartdataObj={id:u.id, name:u.name, price:u.price,url:u.url}} clock={updateData} clickIz={addToFavourite} click={secondModalToggle} key={u.id} /> )}
+                    </Cart>
+                </Layout>
+            }/>
+            <Route path="/favourite" element={
+                <Layout>
+                    <Favourite>
+                    {data.map(u => <Card removeComponent={true} data={cartData} route="favourite" fill={fill} obj={cartdataObj={id:u.id, name:u.name, price:u.price,url:u.url}} clock={updateData} clickIz={addToFavourite} click={secondModalToggle} key={u.id} /> )}
+                    </Favourite>
+                </Layout>
+            }/>
         </Routes>
         </div>
         
